@@ -131,7 +131,8 @@ body {
     max-width: 42.8125rem; /* 685px */
 }
 
-.partners-subtitle {
+.partners-subtitle,
+.cases-subtitle {
     font-family: 'Outfit';
     font-style: normal;
     font-weight: 400;
@@ -298,13 +299,7 @@ body {
     margin-bottom: 1rem;
 }
 
-.cases-subtitle {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 400;
-    color: #666666;
-    margin-bottom: 3.75rem;
-}
+
 
 .cases-container {
     display: flex;
@@ -498,21 +493,15 @@ z-index: 1;
 text-align: center;
 padding: 1.25rem; /* 20px */
 border-radius: 0.625rem; /* 10px */
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 1.25rem; /* 20px */
-    border-radius: 0.625rem; /* 10px */
 }
 
 .title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 6.25rem; /* 100px */
-    font-weight: 500;
-    line-height: 90%;
-    text-transform: uppercase;
-    margin-bottom: 1.875rem; /* 30px */
-    max-width: 39.625rem; /* 634px */
+font-family: 'Outfit', sans-serif;
+font-size: 6.25rem; /* 100px */
+font-weight: 500;
+line-height: 100%;
+margin-bottom: 1.875rem; /* 30px */
+max-width: 39.625rem; /* 634px */
 }
 
 .subtitle {
@@ -730,9 +719,13 @@ border-radius: 0.625rem; /* 10px */
     width: calc(400% + 8rem);
 }
 
+.testimonial-track:hover {
+    animation-play-state: paused;
+}
+
 .testimonial-comments {
     flex-shrink: 0;
-    height: 300px;
+    height: 450px;
     width: auto;
     margin-right: 2rem;
 }
@@ -814,7 +807,7 @@ border-radius: 0.625rem; /* 10px */
     }
     
     .testimonial-comments {
-        height: 200px;
+        height: 300px;
     }
     
     .cta-title {

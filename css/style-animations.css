@@ -6,21 +6,21 @@
 .partner-line-1 {
     display: flex;
     align-items: center;
-    animation: scroll-left 75s linear infinite;
+    animation: scroll-left 180s linear infinite;
     width: max-content;
 }
 
 .partner-line-2 {
     display: flex;
     align-items: center;
-    animation: scroll-left 65s linear infinite;
+    animation: scroll-left 150s linear infinite;
     width: max-content;
 }
 
 .partner-line-3 {
     display: flex;
     align-items: center;
-    animation: scroll-left 45s linear infinite;
+    animation: scroll-left 130s linear infinite;
     width: max-content;
 }
 
