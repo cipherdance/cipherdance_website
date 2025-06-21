@@ -74,4 +74,9 @@
     .testimonial-track {
         animation: scroll-testimonials 40s linear infinite; /* 从80s减少到40s，速度加倍 */
     }
+    
+    /* 手机端禁用悬停暂停功能 */
+    .testimonial-track:hover {
+        animation-play-state: running; /* 强制继续运行，覆盖桌面端的暂停 */
+    }
 }
