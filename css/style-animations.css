@@ -51,3 +51,27 @@
         transform: translateX(-50%); /* Scroll half the width to create seamless loop, with slight adjustment */
     }
 }
+
+/* Mobile responsive styles for partner logos */
+@media (max-width: 48rem) {
+    .partner-line-1 .partner-logo-wrapper img {
+        height: 2rem;
+    }
+
+    .partner-line-2 .partner-logo-wrapper img {
+        height: 4rem;
+    }
+
+    .partner-line-3 .partner-logo-wrapper img {
+        height: 3rem;
+    }
+    
+    .partner-logo-wrapper {
+        margin-right: 1rem;
+    }
+    
+    /* 手机端推荐部分加快移动速度 */
+    .testimonial-track {
+        animation: scroll-testimonials 40s linear infinite; /* 从80s减少到40s，速度加倍 */
+    }
+}

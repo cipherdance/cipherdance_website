@@ -186,7 +186,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center; /* Center the frames horizontally */
-    align-items: center; /* Align items to the top */
+    align-items: stretch; /* Align items to the top */
     padding: 1.25rem; /* 20px */
     gap: 1.1875rem; /* 19px */
 
@@ -194,6 +194,49 @@ body {
     width: 100%;
     max-width: 100.125rem; /* 1282px / 16px = 80.125rem - Keep a max-width to prevent frames from becoming too wide */
     margin: 0 auto; /* Center the container */
+}
+
+@media (max-width: 64rem) {
+    .frames-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 48rem) {
+    .frames-container {
+        flex-direction: column;
+        gap: 1.25rem;
+        padding: 0.75rem;
+    }
+    
+    .content-frame {
+        width: 100%;
+        height: auto;
+        padding: 2rem 1.5rem; /* 增加垂直padding */
+        text-align: center;
+        margin: 0 0.5rem; /* 增加外边距，避免贴边 */
+    }
+    
+    .frame-text-content {
+        width: 100%;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .frame-text-content .frame-title {
+        font-size: 1.25rem; /* 减小标题 */
+        text-align: center;
+        line-height: 1.3;
+    }
+    
+    .frame-text-content .frame-description {
+        font-size: 0.8rem; /* 进一步减小描述文字 */
+        text-align: left; /* 改为左对齐 */
+        line-height: 1.4;
+        padding: 0 0.5rem; /* 增加内边距 */
+    }
 }
 
 .content-frame {
@@ -513,14 +556,116 @@ max-width: 39.625rem; /* 634px */
     margin: 0 auto;
 }
 
+/* Mobile Menu Styles */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background-color: #000;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    padding-top: 120px;
+    text-align: center;
+}
+
+.mobile-nav.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.mobile-nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.5rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.mobile-nav-links a:hover {
+    color: #FF6B00;
+}
+
+.mobile-cta-button {
+    padding: 1rem 2rem;
+    background: #FF6B00;
+    border: none;
+    border-radius: 6.25rem;
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.mobile-cta-button:hover {
+    background-color: #e05d00;
+}
+
 /* Responsive styles */
 @media (max-width: 64rem) { /* 1024px */
     .title {
-        font-size: 5rem; /* 80px */
+        font-size: 4.5rem; /* 72px */
     }
     
     .subtitle {
         font-size: 1.25rem; /* 20px */
+    }
+    
+    .section-title {
+        font-size: 3rem;
+    }
+    
+    .partners-title {
+        font-size: 3rem;
     }
 }
 
@@ -530,15 +675,91 @@ max-width: 39.625rem; /* 634px */
     }
     
     .nav {
-        display: none; /* Will be replaced with mobile menu */
+        display: none;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
     }
     
     .title {
-        font-size: 3.75rem; /* 60px */
+        font-size: 2.5rem; /* 增加英雄标题大小 */
+        margin-bottom: 1rem;
     }
     
     .subtitle {
-        font-size: 1.125rem; /* 18px */
+        font-size: 1rem; /* 增加英雄副标题大小 */
+    }
+    
+    .hero-content {
+        padding: 2rem; /* 增加更多padding */
+    }
+    
+    .section-title {
+        font-size: 2.25rem;
+        margin-bottom: 2rem;
+    }
+    
+    .partners-title,
+    .cases-title {
+        font-size: 2.25rem; /* 确保相同大小 */
+    }
+    
+    .partners-subtitle,
+    .cases-subtitle {
+        font-size: 1.125rem; /* 确保相同大小 */
+        margin-bottom: 3rem;
+    }
+    
+    /* Cases section mobile optimization */
+    .cases-container {
+        padding: 0 1rem;
+    }
+    
+    .case-subsection {
+        gap: 1.5rem;
+    }
+    
+    .case-content-wrapper {
+        padding: 1rem;
+    }
+    
+    .case-image-container {
+        width: 100%;
+        height: auto;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    
+    .case-badge-title {
+        font-size: 1.125rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .case-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .detail-item p {
+        font-size: 0.9rem;
+    }
+    
+    /* Discover More Button mobile optimization */
+    .discover-more-container {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 2rem;
+    }
+    
+    .discover-more-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        height: 3rem;
+    }
+    
+    .button-arrow {
+        height: 3rem;
     }
 }
 
@@ -653,19 +874,39 @@ max-width: 39.625rem; /* 634px */
 
 /* Responsive adjustments for team section */
 @media (max-width: 768px) {
+    .team-section {
+        padding: 3rem 1rem;
+    }
+    
     .team-row {
         flex-direction: column;
         align-items: center;
         gap: 2rem;
+        margin-bottom: 2rem;
     }
     
     .team-title {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
+        margin-bottom: 2rem;
     }
     
     .member-photo {
-        width: 130px;
-        height: 130px;
+        width: 10rem;
+        height: 10rem;
+    }
+    
+    .member-name {
+        font-size: 1.25rem;
+    }
+    
+    .member-role {
+        font-size: 1rem;
+    }
+    
+    .member-description {
+        font-size: 0.8rem;
+        max-width: 280px;
+        margin: 0 auto;
     }
 }
 
@@ -722,6 +963,7 @@ max-width: 39.625rem; /* 634px */
 .testimonial-track:hover {
     animation-play-state: paused;
 }
+
 
 .testimonial-comments {
     flex-shrink: 0;
@@ -802,17 +1044,28 @@ max-width: 39.625rem; /* 634px */
 
 /* Responsive adjustments for testimonial section */
 @media (max-width: 768px) {
+    .testimonial-section {
+        padding: 3rem 0 0 0;
+        min-height: 600px;
+    }
+    
     .testimonial-title {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
+        margin-bottom: 2rem;
     }
     
     .testimonial-comments {
-        height: 300px;
+        height: 250px;
     }
     
     .cta-title {
-        font-size: 2.25rem;
+        font-size: 2rem;
         width: 90%;
+        margin: 8rem auto 2rem auto;
+    }
+    
+    .cta-subtitle {
+        margin-bottom: 6rem;
     }
     
     .company-name {
@@ -911,12 +1164,46 @@ max-width: 39.625rem; /* 634px */
 
 /* Responsive adjustments for contact section */
 @media (max-width: 768px) {
+    .contact-section {
+        padding: 3rem 1rem;
+        background-size: 140%; /* 放大背景图 */
+        background-position: center 20%; /* 向下移动20% */
+        text-align: center; /* 确保整个section居中 */
+    }
+    
+    .contact-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* 容器内容居中 */
+    }
+    
+    .contact-title-section {
+        margin-bottom: 3rem;
+    }
+    
     .contact-title {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
+    }
+    
+    .contact-title-icon {
+        width: 50px;
+        height: 50px;
     }
     
     .contact-content {
         max-width: 100%;
+        text-align: center; /* 整体居中 */
+        margin: 0 auto;
+    }
+    
+    .contact-item {
+        margin-bottom: 2rem;
+        gap: 0.75rem;
+        justify-content: flex-start; /* 改为左对齐开始 */
+        align-items: flex-start; /* 顶部对齐 */
+        max-width: 300px; /* 限制最大宽度 */
+        margin-left: auto;
+        margin-right: auto; /* 整个item居中 */
     }
     
     .contact-link {
@@ -925,6 +1212,67 @@ max-width: 39.625rem; /* 634px */
     
     .contact-description {
         font-size: 0.875rem;
+    }
+}
+
+/* Extra small screens optimization */
+@media (max-width: 30rem) { /* 480px */
+    .title {
+        font-size: 2rem; /* 增加英雄标题 */
+        line-height: 1.2;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem; /* 增加英雄副标题 */
+    }
+    
+    .hero-content {
+        padding: 1.5rem; /* 小屏幕稍微减少padding */
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .partners-title,
+    .cases-title {
+        font-size: 1.75rem; /* 确保相同大小 */
+    }
+    
+    .content-frame {
+        padding: 1.5rem 1rem; /* 保持合适的padding */
+        margin: 0 0.25rem; /* 小屏幕减少外边距 */
+    }
+    
+    .frame-text-content .frame-title {
+        font-size: 1.125rem; /* 进一步减小 */
+    }
+    
+    .frame-text-content .frame-description {
+        font-size: 0.75rem; /* 进一步减小 */
+        text-align: left; /* 确保左对齐 */
+        padding: 0 0.25rem;
+    }
+    
+    .case-badge-title {
+        font-size: 1rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .team-title {
+        font-size: 1.75rem;
+    }
+    
+    .testimonial-title {
+        font-size: 1.75rem;
+    }
+    
+    .cta-title {
+        font-size: 1.5rem;
+    }
+    
+    .contact-title {
+        font-size: 1.75rem;
     }
 }
 

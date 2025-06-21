@@ -28,6 +28,20 @@
             </ul>
             <a href="https://calendly.com/poerain-cipherdance/30min" class="cta-button" target="_blank">Book a meeting</a>
         </nav>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="mobile-nav" id="mobileNav">
+            <ul class="mobile-nav-links">
+                <li><a href="#why-us" onclick="closeMobileMenu()">Why Us</a></li>
+                <li><a href="#partnership" onclick="closeMobileMenu()">Partnerships</a></li>
+                <li><a href="#cases" onclick="closeMobileMenu()">Cases</a></li>
+                <li><a href="#testimonials" onclick="closeMobileMenu()">Testimonials</a></li>
+            </ul>
+            <a href="https://calendly.com/poerain-cipherdance/30min" class="mobile-cta-button" target="_blank" onclick="closeMobileMenu()">Book a meeting</a>
+        </div>
     </header>
 
     <main class="hero">
@@ -406,5 +420,23 @@
         </div>
         <div style="font-size: 0.75rem; color: #999; position: absolute; bottom: 1rem; right: 1rem;">Copyright © 2025. All Right Reserved.</div>
     </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            
+            mobileNav.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            
+            mobileNav.classList.remove('active');
+            menuToggle.classList.remove('active');
+        }
+    </script>
 </body>
 </html>
