@@ -1135,7 +1135,10 @@ max-width: 39.625rem; /* 634px */
     flex-shrink: 0;
     width: 24px;
     height: 24px;
-    margin-top: 0.25rem;
+    margin-top: 0.125rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .contact-details {
@@ -1145,7 +1148,8 @@ max-width: 39.625rem; /* 634px */
 .contact-description {
     font-family: 'Outfit', sans-serif;
     font-size: 1rem;
-    color: #666666;
+    font-weight: 600;
+    color: #000000;
     margin-bottom: 0.5rem;
     line-height: 1.4;
 }
