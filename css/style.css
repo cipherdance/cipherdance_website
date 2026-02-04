@@ -141,7 +141,7 @@ body {
     text-align: center;
     color: #666666;
     margin: 0 auto 5rem auto; /* Increased bottom margin */
-    max-width: 27.5625rem; /* 441px */
+    max-width: 100%; /* full width to display on one line */
 }
 
 .partners-container {
@@ -240,11 +240,12 @@ body {
 }
 
 .content-frame {
-    display: flex;  
+    display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2.875rem; /* 30px */
-    gap: 2rem; /* 9px */
+    justify-content: flex-start; /* align content to top */
+    padding: 1.75rem 2.875rem 2.875rem 2.875rem; /* less padding on top */
+    gap: 1.25rem; /* tighter gap between icon and text */
 
     flex: 0 1 25.5%; /* flex-grow: 1, flex-shrink: 1, flex-basis: 27.5% */
     height: 19.3125rem; /* 309px / 16px = 19.3125rem */
@@ -280,7 +281,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
     padding: 0px;
-    gap: 1.625rem; /* 26px */
+    gap: 1rem; /* 16px - tighter gap between title and description */
 
     width: 22.25rem; /* 356px */
     height: auto; /* Changed from fixed height */
@@ -299,7 +300,7 @@ body {
     font-style: normal;
     font-weight: 500;
     font-size: 1.75rem; /* 28px */
-    line-height: 120%;
+    line-height: 130%; /* slightly more breathing room */
     text-transform: capitalize;
 
     color: #000000;
@@ -316,8 +317,9 @@ body {
     font-family: 'Outfit';
     font-style: normal;
     font-weight: 400;
-    font-size: 1.25rem; /* 20px */
-    line-height: 120%;
+    font-size: 1.1rem; /* 17.6px - slightly smaller for better proportion */
+    line-height: 155%; /* more readable line spacing */
+    letter-spacing: 0.01em; /* subtle letter spacing for readability */
 
     color: #666666;
 
@@ -544,15 +546,15 @@ font-size: 6.25rem; /* 100px */
 font-weight: 500;
 line-height: 100%;
 margin-bottom: 1.875rem; /* 30px */
-max-width: 39.625rem; /* 634px */
+max-width: 56rem; /* 896px - wider to fit in 2 lines */
 }
 
 .subtitle {
     font-family: 'Outfit', sans-serif;
-    font-size: 1.5rem; /* 24px */
+    font-size: 2.25rem; /* 36px - 1.5x larger */
     line-height: 110%;
     color: #666666;
-    max-width: 31.75rem; /* 508px */
+    max-width: 48rem; /* wider to accommodate larger text */
     margin: 0 auto;
 }
 
@@ -970,6 +972,73 @@ max-width: 39.625rem; /* 634px */
     height: 450px;
     width: auto;
     margin-right: 2rem;
+}
+
+/* Testimonial Card Styles */
+.testimonial-card {
+    flex-shrink: 0;
+    width: 500px;
+    height: 450px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(255, 107, 0, 0.2);
+}
+
+.testimonial-quote {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #e0e0e0;
+    line-height: 1.6;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.testimonial-author {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 107, 0, 0.3);
+}
+
+.testimonial-author-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #FF6B00;
+}
+
+.testimonial-author-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #999999;
+    margin-top: 0.25rem;
+}
+
+/* Responsive adjustments for testimonial cards */
+@media (max-width: 768px) {
+    .testimonial-card {
+        width: 320px;
+        height: 380px;
+        padding: 1.5rem;
+    }
+
+    .testimonial-quote {
+        font-size: 0.9rem;
+    }
+
+    .testimonial-author-name {
+        font-size: 1.1rem;
+    }
+
+    .testimonial-author-title {
+        font-size: 0.85rem;
+    }
 }
 
 @keyframes scroll-testimonials {
