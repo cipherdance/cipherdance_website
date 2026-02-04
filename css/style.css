@@ -160,9 +160,10 @@ body {
     position: relative;
     padding-top: 1.25rem; /* Adjusted padding */
     padding-bottom: 1.25rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     margin-top: 1.25rem; /* Reduced margin */
+    overflow-x: hidden; /* prevent horizontal overflow */
 }
 
 .section-title {
@@ -187,13 +188,14 @@ body {
     flex-direction: row;
     justify-content: center; /* Center the frames horizontally */
     align-items: stretch; /* Align items to the top */
-    padding: 1.25rem; /* 20px */
+    padding: 1.25rem 3rem; /* more horizontal padding to prevent cutoff */
     gap: 1.1875rem; /* 19px */
 
     /* Removed fixed positioning and width for responsiveness */
     width: 100%;
-    max-width: 100.125rem; /* 1282px / 16px = 80.125rem - Keep a max-width to prevent frames from becoming too wide */
+    max-width: 90rem; /* reduced max-width to fit 4 cards better */
     margin: 0 auto; /* Center the container */
+    box-sizing: border-box;
 }
 
 @media (max-width: 64rem) {
@@ -244,11 +246,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start; /* align content to top */
-    padding: 1.75rem 2.875rem 2.875rem 2.875rem; /* less padding on top */
-    gap: 1.25rem; /* tighter gap between icon and text */
+    padding: 1.75rem 1.5rem 2rem 1.5rem; /* adjusted padding */
+    gap: 1rem; /* gap between icon and text */
 
-    flex: 0 1 25.5%; /* flex-grow: 1, flex-shrink: 1, flex-basis: 27.5% */
-    height: 19.3125rem; /* 309px / 16px = 19.3125rem */
+    flex: 1 1 0; /* equal width distribution */
+    min-width: 0; /* allow shrinking */
+    max-width: 320px; /* max card width */
+    min-height: 24rem; /* minimum height to fit all text */
+    height: auto; /* auto height to expand if needed */
 
     background: linear-gradient(161.56deg, #FFE5C8 -46.59%, #FFFFFF 82.74%);
     border-radius: 0.75rem; /* 12px */
@@ -283,7 +288,7 @@ body {
     padding: 0px;
     gap: 1rem; /* 16px - tighter gap between title and description */
 
-    width: 22.25rem; /* 356px */
+    width: 100%; /* full width of parent */
     height: auto; /* Changed from fixed height */
 
     flex: none;
@@ -293,8 +298,8 @@ body {
 }
 
 .frame-text-content .frame-title {
-    width: auto; /* Changed from fixed width */
-    height: auto; /* Changed from fixed height */
+    width: 100%;
+    min-height: 4.5rem; /* fixed minimum height for 2 lines to align across cards */
 
     font-family: 'Outfit';
     font-style: normal;
