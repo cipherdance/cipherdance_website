@@ -16,12 +16,12 @@
 .partner-line-3 { animation: scroll-left 55s linear infinite; }
 
 .partner-logo-wrapper {
-    margin-right: 3rem;
+    margin-right: 4.6rem;
     flex-shrink: 0;
 }
 
 .partner-logo-wrapper img {
-    height: 2rem;
+    height: 2.4rem;
     width: auto;
     flex-shrink: 0;
 }
@@ -35,11 +35,11 @@
 /* Mobile responsive styles for partner logos */
 @media (max-width: 48rem) {
     .partner-logo-wrapper img {
-        height: 1.5rem;
+        height: 1.6rem;
     }
 
     .partner-logo-wrapper {
-        margin-right: 2rem;
+        margin-right: 2.875rem;
     }
     
     /* 手机端推荐部分加快移动速度 */

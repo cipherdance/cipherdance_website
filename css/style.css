@@ -149,7 +149,7 @@ body {
     flex-wrap: wrap; /* Allow items to wrap */
     justify-content: center; /* Center items horizontally */
     align-items: center;
-    gap: 1.25rem; /* Gap between partner logos */
+    gap: 3rem; /* Gap between partner logo lines */
     width: 100%;
     /* Removed max-width and auto-margin to allow full width */
     /* Removed padding to allow content to stick to edges */
