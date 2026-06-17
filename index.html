@@ -102,7 +102,7 @@
         <h2 class="partners-title">Our Powerhouse Partners</h2>
         <p class="partners-subtitle">Trusted by 100+ fastest-growing protocols across all chains.</p>
         <div class="partners-container">
-            <!-- Logo source: JS paginates these into 3 x 7 visible groups -->
+            <!-- Logo source: JS pins key partners and rotates the remaining logos -->
             <div class="partner-line partner-line-1">
                 <div class="partner-logo-wrapper"><img src="images/CipherClientsLogoAll/0213projects_logo_svg/Agentlisa 1.svg" alt="Agentlisa"></div>
                 <div class="partner-logo-wrapper"><img src="images/CipherClientsLogoAll/0213projects_logo_svg/Astherus 1.svg" alt="Astherus"></div>
@@ -507,9 +507,29 @@
             const flipInTime = 360;
             const rowSlots = Array.from({ length: rowCount }, function() { return []; });
             const visibleSources = new Set();
+            const fixedLogoSlots = [
+                { row: 0, col: 3, src: 'images/CipherClientsLogoAll/0213projects_logo_svg/Hashkey.svg', alt: 'Hashkey' },
+                { row: 1, col: 3, src: 'images/CipherClientsLogoAll/0213projects_logo_svg/MetaMask-logo-white 1.svg', alt: 'MetaMask' },
+                { row: 2, col: 3, src: 'images/CipherClientsLogoAll/CipherClientsLogoOriginal/River.jpg', alt: 'River' }
+            ];
+            const fixedSources = new Set(fixedLogoSlots.map(function(logo) { return logo.src; }));
+            let rotatingLogoIndex = 0;
             let rotationTimer;
             let initialRotationTimer;
             let isPaused = false;
+
+            fixedLogoSlots.forEach(function(logo) {
+                if (seenSources.has(logo.src)) return;
+                seenSources.add(logo.src);
+                logos.push({
+                    src: logo.src,
+                    alt: logo.alt
+                });
+            });
+
+            const rotatingLogos = logos.filter(function(logo) {
+                return !fixedSources.has(logo.src);
+            });
 
             function pickRandom(items) {
                 return items[Math.floor(Math.random() * items.length)];
@@ -517,7 +537,7 @@
 
             function pickNextLogo(currentSource) {
                 const candidates = logos.filter(function(logo) {
-                    return logo.src !== currentSource && !visibleSources.has(logo.src);
+                    return logo.src !== currentSource && !fixedSources.has(logo.src) && !visibleSources.has(logo.src);
                 });
 
                 if (candidates.length > 0) {
@@ -525,13 +545,28 @@
                 }
 
                 const fallbackCandidates = logos.filter(function(logo) {
-                    return logo.src !== currentSource;
+                    return logo.src !== currentSource && !fixedSources.has(logo.src);
                 });
 
                 return fallbackCandidates.length > 0 ? pickRandom(fallbackCandidates) : null;
             }
 
-            function createLogoSlot(logo) {
+            function getFixedLogo(rowIndex, colIndex) {
+                return fixedLogoSlots.find(function(logo) {
+                    return logo.row === rowIndex && logo.col === colIndex;
+                });
+            }
+
+            function getInitialLogo(rowIndex, colIndex) {
+                const fixedLogo = getFixedLogo(rowIndex, colIndex);
+                if (fixedLogo) return fixedLogo;
+
+                const logo = rotatingLogos[rotatingLogoIndex % rotatingLogos.length];
+                rotatingLogoIndex += 1;
+                return logo;
+            }
+
+            function createLogoSlot(logo, isFixed) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'partner-logo-wrapper';
 
@@ -547,6 +582,7 @@
                     wrapper,
                     image,
                     logo,
+                    isFixed,
                     shownAt: Date.now() - minVisibleTime,
                     isChanging: false
                 };
@@ -555,7 +591,7 @@
             function changeOneLogoInRow(rowIndex) {
                 const now = Date.now();
                 const eligibleSlots = rowSlots[rowIndex].filter(function(slot) {
-                    return !slot.isChanging && now - slot.shownAt >= minVisibleTime;
+                    return !slot.isFixed && !slot.isChanging && now - slot.shownAt >= minVisibleTime;
                 });
 
                 if (eligibleSlots.length === 0) return;
@@ -611,6 +647,7 @@
             }
 
             if (logos.length === 0) return;
+            if (rotatingLogos.length === 0) return;
             container.innerHTML = '';
 
             const board = document.createElement('div');
@@ -621,8 +658,8 @@
                 row.className = 'partner-logo-row';
 
                 for (let colIndex = 0; colIndex < logosPerRow; colIndex += 1) {
-                    const logoIndex = rowIndex * logosPerRow + colIndex;
-                    const slot = createLogoSlot(logos[logoIndex % logos.length]);
+                    const fixedLogo = getFixedLogo(rowIndex, colIndex);
+                    const slot = createLogoSlot(getInitialLogo(rowIndex, colIndex), Boolean(fixedLogo));
                     rowSlots[rowIndex].push(slot);
                     row.appendChild(slot.wrapper);
                 }
