@@ -509,7 +509,9 @@
             const visibleSources = new Set();
             const fixedLogoSlots = [
                 { row: 0, col: 3, src: 'images/CipherClientsLogoAll/0213projects_logo_svg/Hashkey.svg', alt: 'Hashkey' },
-                { row: 1, col: 3, src: 'images/CipherClientsLogoAll/0213projects_logo_svg/MetaMask-logo-white 1.svg', alt: 'MetaMask' }
+                { row: 1, col: 3, src: 'images/CipherClientsLogoAll/0213projects_logo_svg/MetaMask-logo-white 1.svg', alt: 'MetaMask' },
+                // River uses the extracted SVG logo, not the original raster asset.
+                { row: 2, col: 3, src: 'images/CipherClientsLogoAll/0213projects_logo_svg/River.svg', alt: 'River' }
             ];
             const fixedSources = new Set(fixedLogoSlots.map(function(logo) { return logo.src; }));
             let rotatingLogoIndex = 0;
