@@ -501,12 +501,14 @@
             const rowCount = 3;
             const logosPerRow = 7;
             const minVisibleTime = 10000;
+            const initialSwitchDelay = 3000;
             const switchInterval = 2500;
             const flipOutTime = 220;
             const flipInTime = 360;
             const rowSlots = Array.from({ length: rowCount }, function() { return []; });
             const visibleSources = new Set();
             let rotationTimer;
+            let initialRotationTimer;
             let isPaused = false;
 
             function pickRandom(items) {
@@ -545,7 +547,7 @@
                     wrapper,
                     image,
                     logo,
-                    shownAt: Date.now(),
+                    shownAt: Date.now() - minVisibleTime,
                     isChanging: false
                 };
             }
@@ -585,19 +587,27 @@
 
             function stopRotation() {
                 isPaused = true;
+                window.clearTimeout(initialRotationTimer);
                 window.clearInterval(rotationTimer);
             }
 
             function startRotation() {
                 if (logos.length <= rowCount * logosPerRow) return;
+                window.clearTimeout(initialRotationTimer);
                 window.clearInterval(rotationTimer);
                 isPaused = false;
-                rotationTimer = window.setInterval(function() {
+
+                function rotateRows() {
                     if (isPaused) return;
                     rowSlots.forEach(function(_, rowIndex) {
                         changeOneLogoInRow(rowIndex);
                     });
-                }, switchInterval);
+                }
+
+                initialRotationTimer = window.setTimeout(function() {
+                    rotateRows();
+                    rotationTimer = window.setInterval(rotateRows, switchInterval);
+                }, initialSwitchDelay);
             }
 
             if (logos.length === 0) return;
