@@ -1,45 +1,107 @@
 .partners-container {
-    overflow: hidden; /* Hide overflowing content */
-    white-space: nowrap; /* Prevent logos from wrapping */
+    display: block;
+    width: min(100%, 108rem);
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
-/* Shared styles for all partner lines */
 .partner-line {
-    display: flex;
-    align-items: center;
-    width: max-content;
+    display: none;
 }
 
-/* Different speeds per line for visual depth */
-.partner-line-1 { animation: scroll-left 60s linear infinite; }
-.partner-line-2 { animation: scroll-left 50s linear infinite; }
-.partner-line-3 { animation: scroll-left 55s linear infinite; }
+.partner-logo-board {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    min-height: 16.6rem;
+}
+
+.partner-logo-row {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    align-items: center;
+    gap: 2rem;
+    min-height: 4.8rem;
+}
 
 .partner-logo-wrapper {
-    margin-right: 4.6rem;
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 4.8rem;
+    margin: 0;
+    perspective: 48rem;
 }
 
 .partner-logo-wrapper img {
-    height: 2.4rem;
+    display: block;
     width: auto;
-    flex-shrink: 0;
+    max-width: 100%;
+    max-height: 3rem;
+    object-fit: contain;
+    backface-visibility: hidden;
+    transform-origin: center;
+    transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
-/* Scroll exactly 1/4 of total width (= one full logo set) for seamless loop */
-@keyframes scroll-left {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-25%); }
+.partner-logo-wrapper.is-flipping img {
+    opacity: 0;
+    transform: rotateX(78deg) translateY(-0.35rem);
 }
 
-/* Mobile responsive styles for partner logos */
-@media (max-width: 48rem) {
+.partner-logo-wrapper.is-entering img {
+    animation: logo-page-in 0.36s ease both;
+}
+
+@keyframes logo-page-in {
+    from {
+        opacity: 0;
+        transform: rotateX(-72deg) translateY(0.35rem);
+    }
+    to {
+        opacity: 1;
+        transform: rotateX(0deg) translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
     .partner-logo-wrapper img {
-        height: 1.6rem;
+        transition: none;
+    }
+
+    .partner-logo-wrapper.is-entering img {
+        animation: none;
+    }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 64rem) {
+    .partner-logo-row {
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 48rem) {
+    .partners-container {
+        padding: 0 1rem;
+    }
+
+    .partner-logo-board {
+        gap: 0.85rem;
+    }
+
+    .partner-logo-row {
+        gap: 0.85rem 1rem;
+        min-height: 3.8rem;
     }
 
     .partner-logo-wrapper {
-        margin-right: 2.875rem;
+        min-height: 3.8rem;
+    }
+
+    .partner-logo-wrapper img {
+        max-height: 2.2rem;
     }
     
     /* 手机端推荐部分加快移动速度 */
