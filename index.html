@@ -501,8 +501,8 @@
             const rowCount = 3;
             const logosPerRow = 7;
             const minVisibleTime = 10000;
-            const initialSwitchDelay = 3000;
-            const switchInterval = 2500;
+            const minSwitchInterval = 3000;   // 每行两次切换之间的最短间隔（毫秒）
+            const maxSwitchInterval = 6000;   // 每行两次切换之间的最长间隔（毫秒）
             const flipOutTime = 220;
             const flipInTime = 360;
             const rowSlots = Array.from({ length: rowCount }, function() { return []; });
@@ -515,8 +515,7 @@
             ];
             const fixedSources = new Set(fixedLogoSlots.map(function(logo) { return logo.src; }));
             let rotatingLogoIndex = 0;
-            let rotationTimer;
-            let initialRotationTimer;
+            let rowTimers = [];   // 每行各自的切换定时器，互相独立
             let isPaused = false;
 
             fixedLogoSlots.forEach(function(logo) {
@@ -601,6 +600,13 @@
                 const nextLogo = pickNextLogo(slot.logo.src);
                 if (!nextLogo) return;
 
+                // 选中后立刻把新 logo 登记进 visibleSources（提前占位）。
+                // 原因：rotateRows 在同一个 tick 内连续给 3 行各换 1 个 logo，
+                // 若像原来那样等到 220ms 翻页动画结束才登记，后面的行会以为
+                // 这个 logo 还没显示，从而可能选到同一个 → 屏幕上重复出现，
+                // 视觉上就是“翻完页跳了 2 个 logo”。提前占位即可避免同一轮撞车。
+                visibleSources.add(nextLogo.src);
+
                 slot.isChanging = true;
                 slot.wrapper.classList.add('is-flipping');
 
@@ -610,7 +616,7 @@
                     slot.image.src = nextLogo.src;
                     slot.image.alt = nextLogo.alt;
                     slot.shownAt = Date.now();
-                    visibleSources.add(nextLogo.src);
+                    // nextLogo.src 已在翻页开始时占位，这里无需重复添加
 
                     slot.wrapper.classList.remove('is-flipping');
                     slot.wrapper.classList.add('is-entering');
@@ -622,29 +628,35 @@
                 }, flipOutTime);
             }
 
+            // 在 [minSwitchInterval, maxSwitchInterval] 之间取一个随机间隔
+            function randomSwitchDelay() {
+                return minSwitchInterval + Math.random() * (maxSwitchInterval - minSwitchInterval);
+            }
+
+            // 给某一行排下一次切换：每次都用全新的随机间隔，
+            // 三行各自独立，因此翻页时间天然错开，不会再同一刻一起翻。
+            function scheduleRow(rowIndex) {
+                rowTimers[rowIndex] = window.setTimeout(function () {
+                    if (isPaused) return;          // 暂停时既不切换也不再排程
+                    changeOneLogoInRow(rowIndex);
+                    scheduleRow(rowIndex);         // 切换后立刻排下一次（新的随机间隔）
+                }, randomSwitchDelay());
+            }
+
             function stopRotation() {
                 isPaused = true;
-                window.clearTimeout(initialRotationTimer);
-                window.clearInterval(rotationTimer);
+                rowTimers.forEach(function (timer) { window.clearTimeout(timer); });
+                rowTimers = [];
             }
 
             function startRotation() {
                 if (logos.length <= rowCount * logosPerRow) return;
-                window.clearTimeout(initialRotationTimer);
-                window.clearInterval(rotationTimer);
+                stopRotation();        // 先清掉可能残留的旧定时器，避免叠加
                 isPaused = false;
-
-                function rotateRows() {
-                    if (isPaused) return;
-                    rowSlots.forEach(function(_, rowIndex) {
-                        changeOneLogoInRow(rowIndex);
-                    });
-                }
-
-                initialRotationTimer = window.setTimeout(function() {
-                    rotateRows();
-                    rotationTimer = window.setInterval(rotateRows, switchInterval);
-                }, initialSwitchDelay);
+                // 每行独立启动自己的随机调度
+                rowSlots.forEach(function (_, rowIndex) {
+                    scheduleRow(rowIndex);
+                });
             }
 
             if (logos.length === 0) return;
